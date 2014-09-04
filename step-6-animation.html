@@ -77,22 +77,22 @@
         .append('g')
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
-      var arcTween = function(a) {
-        var i = d3.interpolate(this._current, a);
-        this._current = i(0);
-        return function(t) {
-          return arc(i(t));
-        };
-      };
+      var arcTween = function(a) {                               // NEW
+        var i = d3.interpolate(this._current, a);                // NEW
+        this._current = i(0);                                    // NEW
+        return function(t) {                                     // NEW
+          return arc(i(t));                                      // NEW
+        };                                                       // NEW
+      };                                                         // NEW
 
       d3.csv('provinces.csv', function(error, data) {
         data.forEach(function(d) {
           d.count = +d.count;
         });
 
-        var path = svg.datum(data)
+        var path = svg.datum(data)                               // UPDATED
           .selectAll('path')
-          .data(pie)
+          .data(pie)                                             // UPDATED
           .enter()
           .append('path')
           .attr('d', arc)
@@ -123,17 +123,21 @@
           .attr('y', 9)
           .text(function(d) { return d; });
 
-        var change = function() {
-          if (this.value === 'yes') {
-            pie.value(function(d) { return d.count; }); 
-          } else {
-            pie.value(function(d) { return (d.province === 'ON') ? 0 : d.count; });
-          }
-          path = path.data(pie);
-          path.transition().duration(750).attrTween('d', arcTween);
-        };
+        var change = function() {                                // NEW
+          if (this.value === 'yes') {                            // NEW
+            pie.value(function(d) { return d.count; });          // NEW
+          } else {                                               // NEW
+	    pie.value(function(d) {                              // NEW
+              return (d.province === 'ON') ? 0 : d.count;        // NEW
+	    });                                                  // NEW
+          }                                                      // NEW
+          path = path.data(pie);                                 // NEW
+	  path.transition()                                      // NEW
+	    .duration(750)                                       // NEW
+	    .attrTween('d', arcTween);                           // NEW
+        };                                                       // NEW
 
-        d3.selectAll('input').on('change', change);
+        d3.selectAll('input').on('change', change);              // NEW
       });
     })(window.d3);
     </script>

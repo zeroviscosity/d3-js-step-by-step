@@ -38,24 +38,25 @@
       var pie = d3.layout.pie()
         .value(function(d) { return d.count; });
 
-      var tooltip = d3.select('body')
-        .append('div')
-        .attr('class', 'tooltip');
+      var tooltip = d3.select('body')                          // NEW
+        .append('div')                                         // NEW
+        .attr('class', 'tooltip');                             // NEW
 
-      var tooltipOn = function(d, i) {
-        var content = '<div>' + d.data.province + '</div><div>' + d.data.count + '</div>';
-        tooltip.html(content)
-          .style('visibility', 'visible');
-      };
+      var tooltipOn = function(d, i) {                         // NEW
+	var content = '<div>' + d.data.province +              // NEW
+		      '</div><div>' + d.data.count + '</div>'; // NEW
+        tooltip.html(content)                                  // NEW
+          .style('visibility', 'visible');                     // NEW
+      };                                                       // NEW
 
-      var tooltipMove = function(d, i) {
-        tooltip.style('top', (d3.event.pageY + 10) + 'px')
-          .style('left', (d3.event.pageX + 10) + 'px');
-      };
+      var tooltipMove = function(d, i) {                       // NEW
+        tooltip.style('top', (d3.event.pageY + 10) + 'px')     // NEW
+          .style('left', (d3.event.pageX + 10) + 'px');        // NEW
+      };                          // NEW
  
-      var tooltipOff = function() {
-        tooltip.style('visibility', 'hidden');
-      };
+      var tooltipOff = function() {                            // NEW
+        tooltip.style('visibility', 'hidden');                 // NEW
+      };                                                       // NEW
 
       var svg = d3.select('body')
         .append('svg')
@@ -76,9 +77,9 @@
           .attr('d', arc)
           .attr('fill', function(d, i) { return color(d.data.province); });
         
-        path.on('mouseover', tooltipOn)
-          .on('mousemove', tooltipMove)
-          .on('mouseout', tooltipOff);
+        path.on('mouseover', tooltipOn)                        // NEW
+          .on('mousemove', tooltipMove)                        // NEW
+          .on('mouseout', tooltipOff);                         // NEW
 
         var legend = svg.selectAll('.legend')
           .data(color.domain())

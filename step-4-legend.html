@@ -47,23 +47,25 @@
           .attr('d', arc)
           .attr('fill', function(d, i) { return color(d.data.province); });
 
-        var legend = svg.selectAll('.legend')
-          .data(color.domain())
-          .enter()
-          .append('g')
-          .attr('class', 'legend')
-          .attr('transform', function(d, i) { return 'translate(0,' + (i * 20 - 100) + ')'; });
+        var legend = svg.selectAll('.legend')                           // NEW
+          .data(color.domain())                                         // NEW
+          .enter()                                                      // NEW
+          .append('g')                                                  // NEW
+          .attr('class', 'legend')                                      // NEW
+	  .attr('transform', function(d, i) {                           // NEW
+		  return 'translate(0,' + (i * 20 - 100) + ')';         // NEW
+	  });                                                           // NEW
 
-        legend.append('rect')
-          .attr('width', 18)
-          .attr('height', 18)
-          .attr('x', -18)
-          .style('fill', color);
+        legend.append('rect')                                           // NEW
+          .attr('width', 18)                                            // NEW
+          .attr('height', 18)                                           // NEW
+          .attr('x', -18)                                               // NEW 
+          .style('fill', color);                                        // NEW
 
-        legend.append('text')
-          .attr('x', 4)
-          .attr('y', 13)
-          .text(function(d) { return d; });
+        legend.append('text')                                           // NEW
+          .attr('x', 4)                                                 // NEW
+          .attr('y', 13)                                                // NEW
+          .text(function(d) { return d; });                             // NEW
       });
     })(window.d3);
     </script>

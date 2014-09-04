@@ -21,7 +21,7 @@
         .innerRadius(radius - 110);
 
       var pie = d3.layout.pie()
-        .value(function(d) { return d.count; });
+        .value(function(d) { return d.count; });                // UPDATED
 
       var svg = d3.select('body')
         .append('svg')
@@ -30,10 +30,10 @@
         .append('g')
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
-      d3.csv('provinces.csv', function(error, data) {
-        data.forEach(function(d) {
-          d.count = +d.count;
-        });
+      d3.csv('provinces.csv', function(error, data) {           // NEW
+        data.forEach(function(d) {                              // NEW
+          d.count = +d.count; // Cast to number                 // NEW
+        });                                                     // NEW
 
         var path = svg.selectAll('path')
           .data(pie(data))
@@ -41,7 +41,7 @@
           .append('path')
           .attr('d', arc)
           .attr('fill', function(d, i) { return color(i); });
-      });
+      });                                                       // NEW
     })(window.d3);
     </script>
   </body>
