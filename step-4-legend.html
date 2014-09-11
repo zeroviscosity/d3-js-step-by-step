@@ -1,74 +1,84 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <title>Step 4 - Legend</title>
+    <link rel="stylesheet" href="normalize.css">
     <style>
-    body {
-      font: 10px sans-serif;
-    }
+      rect {
+        stroke-width: 2;
+      }
     </style>
   </head>
   <body>
+    <div id="chart"></div>
     <script src="d3.v3.min.js"></script>
     <script>
-    (function(d3) {
-      'use strict';
+      (function(d3) {
+        'use strict';
 
-      var width = 960,
-        height = 500,
-        radius = Math.min(width, height) / 2;
+        var width = 400;
+        var height = 400;
+        var radius = Math.min(width, height) / 2;
+        var donutWidth = 80;
+        var legendRectSize = 18;
+        var legendBuffer = 4;
 
-      var color = d3.scale.category10();
+        var color = d3.scale.category20b();
 
-      var arc = d3.svg.arc()
-        .outerRadius(radius - 10)
-        .innerRadius(radius - 110);
+        var arc = d3.svg.arc()
+          .outerRadius(radius)
+          .innerRadius(radius - donutWidth);
 
-      var pie = d3.layout.pie()
-        .value(function(d) { return d.count; });
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.count; })
+          .sort(null);
 
-      var svg = d3.select('body')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .append('g')
-        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+        var svg = d3.select('#chart')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + (width / 2) + 
+            ',' + (height / 2) + ')');
 
-      d3.csv('provinces.csv', function(error, data) {
-        data.forEach(function(d) {
-          d.count = +d.count;
+        d3.csv('weekdays.csv', function(error, data) {
+          data.forEach(function(d) {
+            d.count = +d.count;
+          });
+
+          var path = svg.selectAll('path')
+            .data(pie(data))
+            .enter()
+            .append('path')
+            .attr('d', arc)
+            .attr('fill', function(d, i) { 
+              return color(d.data.weekday);                         // UPDATED
+            });
+            
+          var legend = svg.selectAll('.legend')
+            .data(color.domain())
+            .enter()
+            .append('g')
+            .attr('class', 'legend')
+            .attr('transform', function(d, i) {
+              var size = legendRectSize + legendBuffer;
+              var offset =  size * color.domain().length / 2;
+              return 'translate(-40,' + (i * size - offset) + ')'; 
+            });
+
+          legend.append('rect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)                                   
+            .style('fill', color)
+            .style('stroke', color);
+            
+          legend.append('text')
+            .attr('x', legendRectSize + legendBuffer)
+            .attr('y', legendRectSize - legendBuffer)
+            .text(function(d) { return d; });
         });
-
-        var path = svg.selectAll('path')
-          .data(pie(data))
-          .enter()
-          .append('path')
-          .attr('d', arc)
-          .attr('fill', function(d, i) { return color(d.data.province); });
-
-        var legend = svg.selectAll('.legend')                           // NEW
-          .data(color.domain())                                         // NEW
-          .enter()                                                      // NEW
-          .append('g')                                                  // NEW
-          .attr('class', 'legend')                                      // NEW
-	  .attr('transform', function(d, i) {                           // NEW
-		  return 'translate(0,' + (i * 20 - 100) + ')';         // NEW
-	  });                                                           // NEW
-
-        legend.append('rect')                                           // NEW
-          .attr('width', 18)                                            // NEW
-          .attr('height', 18)                                           // NEW
-          .attr('x', -18)                                               // NEW 
-          .style('fill', color);                                        // NEW
-
-        legend.append('text')                                           // NEW
-          .attr('x', 4)                                                 // NEW
-          .attr('y', 13)                                                // NEW
-          .text(function(d) { return d; });                             // NEW
-      });
-    })(window.d3);
+      })(window.d3);
     </script>
   </body>
 </html>
-
