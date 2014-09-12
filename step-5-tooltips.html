@@ -75,13 +75,13 @@
         tooltip.append('div')
           .attr('class', 'percent');
 
-        d3.csv('weekdays.csv', function(error, data) {
-          data.forEach(function(d) {
+        d3.csv('weekdays.csv', function(error, dataset) {
+          dataset.forEach(function(d) {
             d.count = +d.count;
           });
 
           var path = svg.selectAll('path')
-            .data(pie(data))
+            .data(pie(dataset))
             .enter()
             .append('path')
             .attr('d', arc)
@@ -90,7 +90,7 @@
             });
 
           path.on('mouseover', function(d) {
-            var total = d3.sum(data.map(function(d) {
+            var total = d3.sum(dataset.map(function(d) {
               return d.count;
             }));
             var percent = Math.round(1000 * d.data.count / total) / 10;

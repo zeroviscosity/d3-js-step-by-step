@@ -42,13 +42,13 @@
           .attr('transform', 'translate(' + (width / 2) + 
             ',' + (height / 2) + ')');
 
-        d3.csv('weekdays.csv', function(error, data) {
-          data.forEach(function(d) {
+        d3.csv('weekdays.csv', function(error, dataset) {
+          dataset.forEach(function(d) {
             d.count = +d.count;
           });
 
           var path = svg.selectAll('path')
-            .data(pie(data))
+            .data(pie(dataset))
             .enter()
             .append('path')
             .attr('d', arc)

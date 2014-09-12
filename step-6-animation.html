@@ -79,16 +79,16 @@
         tooltip.append('div')
           .attr('class', 'percent');
 
-        d3.csv('weekdays.csv', function(error, data) {
+        d3.csv('weekdays.csv', function(error, dataset) {
           var labels = {};                                        // NEW
 
-          data.forEach(function(d) {
+          dataset.forEach(function(d) {
             d.count = +d.count;
             labels[d.label] = true;                             // NEW
           });
 
           var path = svg.selectAll('path')
-            .data(pie(data))
+            .data(pie(dataset))
             .enter()
             .append('path')
             .attr('d', arc)
@@ -98,7 +98,7 @@
             .each(function(d) { this._current = d; });              // NEW
 
           path.on('mouseover', function(d) {
-            var total = d3.sum(data.map(function(d) {
+            var total = d3.sum(dataset.map(function(d) {
               return (labels[d.label]) ? d.count : 0;           // UPDATED
             }));
             var percent = Math.round(1000 * d.data.count / total) / 10;
@@ -135,23 +135,23 @@
             .attr('height', legendRectSize)                                   
             .style('fill', color)
             .style('stroke', color)
-            .on('click', function(label) {                          // NEW
+            .on('click', function(label) {                            // NEW
               var rect = d3.select(this);                             // NEW
               
               if (rect.attr('class') === 'off') {                     // NEW
                 rect.attr('class', '');                               // NEW
-                labels[label] = true;                             // NEW
+                labels[label] = true;                                 // NEW
               } else {                                                // NEW
-                if (d3.sum(d3.values(labels)) < 2) return;          // NEW
+                if (d3.sum(d3.values(labels)) < 2) return;            // NEW
                 rect.attr('class', 'off');                            // NEW
-                labels[label] = false;                            // NEW
+                labels[label] = false;                                // NEW
               }                                                       // NEW
 
               pie.value(function(d) {                                 // NEW
-                return (labels[d.label]) ? d.count : 0;           // NEW
+                return (labels[d.label]) ? d.count : 0;               // NEW
               });                                                     // NEW
 
-              path = path.data(pie(data));                            // NEW
+              path = path.data(pie(dataset));                         // NEW
 
               path.transition()                                       // NEW
                 .duration(750)                                        // NEW
