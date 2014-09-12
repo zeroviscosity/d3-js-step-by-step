@@ -7,6 +7,7 @@
     <style>
       #chart {
         height: 360px;
+        margin: 0 auto;
         position: relative;
         width: 360px;
       }
@@ -34,9 +35,14 @@
       rect.off {
         fill: transparent !important;
       }
+      h1 {
+        font-size: 14px;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
+    <h1>Toronto Parking Tickets by Weekday in 2012</h1>
     <div id="chart"></div>
     <script src="d3.v3.min.js"></script>
     <script>
