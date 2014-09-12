@@ -40,9 +40,9 @@
         var height = 400;
         var radius = Math.min(width, height) / 2;
         var donutWidth = 80;
-        var tooltipBuffer = 14;
         var legendRectSize = 18;
         var legendBuffer = 4;
+        var tooltipBuffer = 14;
 
         var color = d3.scale.category20b();
 
@@ -76,15 +76,8 @@
           .attr('class', 'percent');
 
         d3.csv('weekdays.csv', function(error, data) {
-          var total = 0;
-
           data.forEach(function(d) {
             d.count = +d.count;
-            total += d.count;
-          });
-
-          data.forEach(function(d) {
-            d.percent = Math.round(1000 * d.count / total) / 10;
           });
 
           var path = svg.selectAll('path')
@@ -97,15 +90,26 @@
             });
 
           path.on('mouseover', function(d) {
+            var total = d3.sum(data.map(function(d) {
+              return d.count;
+            }));
+            var percent = Math.round(1000 * d.data.count / total) / 10;
             tooltip.select('.weekday').html(d.data.weekday);
             tooltip.select('.count').html(d.data.count); 
-            tooltip.select('.percent').html(d.data.percent + '%'); 
+            tooltip.select('.percent').html(percent + '%'); 
             tooltip.style('display', 'block');
           });
           
           path.on('mouseout', function() {
             tooltip.style('display', 'none');
           });
+
+          /* OPTIONAL 
+          path.on('mousemove', function(d) {
+            tooltip.style('top', (d3.event.pageY + 10) + 'px')
+              .style('left', (d3.event.pageX + 10) + 'px');
+          });
+          */
             
           var legend = svg.selectAll('.legend')
             .data(color.domain())
