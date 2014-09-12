@@ -21,8 +21,8 @@
         var height = 400;
         var radius = Math.min(width, height) / 2;
         var donutWidth = 80;
-        var legendRectSize = 18;
-        var legendBuffer = 4;
+        var legendRectSize = 18;                                    // NEW
+        var legendBuffer = 4;                                       // NEW
 
         var color = d3.scale.category20b();
 
@@ -56,27 +56,27 @@
               return color(d.data.weekday);                         // UPDATED
             });
             
-          var legend = svg.selectAll('.legend')
-            .data(color.domain())
-            .enter()
-            .append('g')
-            .attr('class', 'legend')
-            .attr('transform', function(d, i) {
-              var size = legendRectSize + legendBuffer;
-              var offset =  size * color.domain().length / 2;
-              return 'translate(-40,' + (i * size - offset) + ')'; 
-            });
+          var legend = svg.selectAll('.legend')                     // NEW
+            .data(color.domain())                                   // NEW
+            .enter()                                                // NEW
+            .append('g')                                            // NEW
+            .attr('class', 'legend')                                // NEW
+            .attr('transform', function(d, i) {                     // NEW
+              var size = legendRectSize + legendBuffer;             // NEW
+              var offset =  size * color.domain().length / 2;       // NEW
+              return 'translate(-40,' + (i * size - offset) + ')';  // NEW
+            });                                                     // NEW
 
-          legend.append('rect')
-            .attr('width', legendRectSize)
-            .attr('height', legendRectSize)                                   
-            .style('fill', color)
-            .style('stroke', color);
+          legend.append('rect')                                     // NEW
+            .attr('width', legendRectSize)                          // NEW
+            .attr('height', legendRectSize)                         // NEW
+            .style('fill', color)                                   // NEW
+            .style('stroke', color);                                // NEW
             
-          legend.append('text')
-            .attr('x', legendRectSize + legendBuffer)
-            .attr('y', legendRectSize - legendBuffer)
-            .text(function(d) { return d; });
+          legend.append('text')                                     // NEW
+            .attr('x', legendRectSize + legendBuffer)               // NEW
+            .attr('y', legendRectSize - legendBuffer)               // NEW
+            .text(function(d) { return d; });                       // NEW
         });
       })(window.d3);
     </script>

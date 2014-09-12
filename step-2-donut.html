@@ -22,13 +22,13 @@
         var width = 400;
         var height = 400;
         var radius = Math.min(width, height) / 2;
-        var donutWidth = 80;
+        var donutWidth = 80;                            // NEW
 
         var color = d3.scale.category20b();
 
         var arc = d3.svg.arc()
-          .outerRadius(radius)
-          .innerRadius(radius - donutWidth);
+          .outerRadius(radius)                          // UPDATED (removed semicolon)
+          .innerRadius(radius - donutWidth);            // NEW
 
         var pie = d3.layout.pie()
           .value(function(d) { return d.count; })

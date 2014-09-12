@@ -12,6 +12,8 @@
       (function(d3) {
         'use strict';
 
+        // REMOVED var data = ...
+
         var width = 400;
         var height = 400;
         var radius = Math.min(width, height) / 2;
@@ -35,10 +37,10 @@
           .attr('transform', 'translate(' + (width / 2) + 
             ',' + (height / 2) + ')');
 
-        d3.csv('weekdays.csv', function(error, data) {
-          data.forEach(function(d) {
-            d.count = +d.count;
-          });
+        d3.csv('weekdays.csv', function(error, data) {        // NEW
+          data.forEach(function(d) {                          // NEW
+            d.count = +d.count;                               // NEW
+          });                                                 // NEW
 
           var path = svg.selectAll('path')
             .data(pie(data))
@@ -48,7 +50,7 @@
             .attr('fill', function(d, i) { 
               return color(i); 
             });
-        });
+        });                                                   // NEW
       })(window.d3);
     </script>
   </body>
