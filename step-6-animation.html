@@ -83,11 +83,9 @@
           .attr('class', 'percent');
 
         d3.csv('weekdays.csv', function(error, dataset) {
-          var labels = {};                                            // NEW
-
           dataset.forEach(function(d) {
             d.count = +d.count;
-            labels[d.label] = true;                                   // NEW
+            d.enabled = true;                                         // NEW
           });
 
           var path = svg.selectAll('path')
@@ -97,12 +95,12 @@
             .attr('d', arc)
             .attr('fill', function(d, i) { 
               return color(d.data.label); 
-            })                                                        // UPDATED (removed semicolon)
-            .each(function(d) { this._current = d; });                // NEW
+            })
+            .each(function(d) { this._current = d; });                // UPDATED (removed semicolon)
 
           path.on('mouseover', function(d) {
             var total = d3.sum(dataset.map(function(d) {
-              return (labels[d.label]) ? d.count : 0;                 // UPDATED
+              return (d.enabled) ? d.count : 0;                       // UPDATED
             }));
             var percent = Math.round(1000 * d.data.count / total) / 10;
             tooltip.select('.label').html(d.data.label);
@@ -139,21 +137,26 @@
             .attr('width', legendRectSize)
             .attr('height', legendRectSize)                                   
             .style('fill', color)
-            .style('stroke', color)
+            .style('stroke', color)                                   // UPDATED (removed semicolon)
             .on('click', function(label) {                            // NEW
               var rect = d3.select(this);                             // NEW
+              var enabled = true;                                     // NEW
+              var totalEnabled = d3.sum(dataset.map(function(d) {     // NEW
+                return (d.enabled) ? 1 : 0;                           // NEW
+              }));                                                    // NEW
               
+
               if (rect.attr('class') === 'off') {                     // NEW
                 rect.attr('class', '');                               // NEW
-                labels[label] = true;                                 // NEW
               } else {                                                // NEW
-                if (d3.sum(d3.values(labels)) < 2) return;            // NEW
+                if (totalEnabled < 2) return;                         // NEW
                 rect.attr('class', 'off');                            // NEW
-                labels[label] = false;                                // NEW
+                enabled = false;                                      // NEW
               }                                                       // NEW
 
               pie.value(function(d) {                                 // NEW
-                return (labels[d.label]) ? d.count : 0;               // NEW
+                if (d.label === label) d.enabled = enabled;           // NEW
+                return (d.enabled) ? d.count : 0;                     // NEW
               });                                                     // NEW
 
               path = path.data(pie(dataset));                         // NEW
