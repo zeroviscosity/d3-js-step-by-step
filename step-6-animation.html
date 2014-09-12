@@ -80,11 +80,11 @@
           .attr('class', 'percent');
 
         d3.csv('weekdays.csv', function(error, dataset) {
-          var labels = {};                                        // NEW
+          var labels = {};                                            // NEW
 
           dataset.forEach(function(d) {
             d.count = +d.count;
-            labels[d.label] = true;                             // NEW
+            labels[d.label] = true;                                   // NEW
           });
 
           var path = svg.selectAll('path')
@@ -94,12 +94,12 @@
             .attr('d', arc)
             .attr('fill', function(d, i) { 
               return color(d.data.label); 
-            })
-            .each(function(d) { this._current = d; });              // NEW
+            })                                                        // UPDATED (removed semicolon)
+            .each(function(d) { this._current = d; });                // NEW
 
           path.on('mouseover', function(d) {
             var total = d3.sum(dataset.map(function(d) {
-              return (labels[d.label]) ? d.count : 0;           // UPDATED
+              return (labels[d.label]) ? d.count : 0;                 // UPDATED
             }));
             var percent = Math.round(1000 * d.data.count / total) / 10;
             tooltip.select('.label').html(d.data.label);

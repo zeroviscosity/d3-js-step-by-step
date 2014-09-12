@@ -42,7 +42,7 @@
         var donutWidth = 80;
         var legendRectSize = 18;
         var legendBuffer = 4;
-        var tooltipBuffer = 14;
+        var tooltipBuffer = 14;                                         // NEW
 
         var color = d3.scale.category20b();
 
@@ -62,18 +62,18 @@
           .attr('transform', 'translate(' + (width / 2) + 
             ',' + (height / 2) + ')');
 
-        var tooltip = d3.select('#chart')
-          .append('div')
-          .attr('class', 'tooltip');
-        
-        tooltip.append('div')
-          .attr('class', 'label');
+        var tooltip = d3.select('#chart')                               // NEW
+          .append('div')                                                // NEW
+          .attr('class', 'tooltip');                                    // NEW
+                      
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'label');                                      // NEW
+             
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'count');                                      // NEW
 
-        tooltip.append('div')
-          .attr('class', 'count');
-
-        tooltip.append('div')
-          .attr('class', 'percent');
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'percent');                                    // NEW
 
         d3.csv('weekdays.csv', function(error, dataset) {
           dataset.forEach(function(d) {
@@ -89,25 +89,25 @@
               return color(d.data.label); 
             });
 
-          path.on('mouseover', function(d) {
-            var total = d3.sum(dataset.map(function(d) {
-              return d.count;
-            }));
-            var percent = Math.round(1000 * d.data.count / total) / 10;
-            tooltip.select('.label').html(d.data.label);
-            tooltip.select('.count').html(d.data.count); 
-            tooltip.select('.percent').html(percent + '%'); 
-            tooltip.style('display', 'block');
-          });
+          path.on('mouseover', function(d) {                            // NEW
+            var total = d3.sum(dataset.map(function(d) {                // NEW
+              return d.count;                                           // NEW
+            }));                                                        // NEW
+            var percent = Math.round(1000 * d.data.count / total) / 10; // NEW
+            tooltip.select('.label').html(d.data.label);                // NEW
+            tooltip.select('.count').html(d.data.count);                // NEW
+            tooltip.select('.percent').html(percent + '%');             // NEW
+            tooltip.style('display', 'block');                          // NEW
+          });                                                           // NEW
           
-          path.on('mouseout', function() {
-            tooltip.style('display', 'none');
-          });
+          path.on('mouseout', function() {                              // NEW
+            tooltip.style('display', 'none');                           // NEW
+          });                                                           // NEW
 
           /* OPTIONAL 
-          path.on('mousemove', function(d) {
-            tooltip.style('top', (d3.event.pageY + 10) + 'px')
-              .style('left', (d3.event.pageX + 10) + 'px');
+          path.on('mousemove', function(d) {                            // NEW
+            tooltip.style('top', (d3.event.pageY + 10) + 'px')          // NEW
+              .style('left', (d3.event.pageX + 10) + 'px');             // NEW
           });
           */
             
