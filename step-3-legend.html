@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Step 3 - Legend</title>
+    <link rel="stylesheet" href="normalize.css">
+    <style>
+      .legend {
+        font-size: 12px;
+      }
+      rect {
+        stroke-width: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <script src="d3.v3.min.js"></script>
+    <script>
+      (function(d3) {
+        'use strict';
+
+        var dataset = [
+          { label: 'Abulia', count: 10 }, 
+          { label: 'Burlap', count: 20 },
+          { label: 'Cucumber', count: 30 },
+          { label: 'Dijkstra', count: 40 }
+        ];
+
+        var width = 360;
+        var height = 360;
+        var radius = Math.min(width, height) / 2;
+        var donutWidth = 75;
+        var legendRectSize = 18;                                  // NEW
+        var legendBuffer = 4;                                     // NEW
+
+        var color = d3.scale.category20b();
+
+        var arc = d3.svg.arc()
+          .outerRadius(radius)
+          .innerRadius(radius - donutWidth);
+
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.count; })
+          .sort(null);
+
+        var svg = d3.select('#chart')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + (width / 2) + 
+            ',' + (height / 2) + ')');
+
+        var path = svg.selectAll('path')
+          .data(pie(dataset))
+          .enter()
+          .append('path')
+          .attr('d', arc)
+          .attr('fill', function(d, i) { 
+            return color(d.data.label);
+          });
+
+        var legend = svg.selectAll('.legend')                     // NEW
+          .data(color.domain())                                   // NEW
+          .enter()                                                // NEW
+          .append('g')                                            // NEW
+          .attr('class', 'legend')                                // NEW
+          .attr('transform', function(d, i) {                     // NEW
+            var size = legendRectSize + legendBuffer;             // NEW
+            var offset =  size * color.domain().length / 2;       // NEW
+            var horz = -2 * legendRectSize;                       // NEW
+            var vert = i * size - offset;                         // NEW
+            return 'translate(' + horz + ',' + vert + ')';        // NEW
+          });                                                     // NEW
+
+        legend.append('rect')                                     // NEW
+          .attr('width', legendRectSize)                          // NEW
+          .attr('height', legendRectSize)                         // NEW
+          .style('fill', color)                                   // NEW
+          .style('stroke', color);                                // NEW
+          
+        legend.append('text')                                     // NEW
+          .attr('x', legendRectSize + legendBuffer)               // NEW
+          .attr('y', legendRectSize - legendBuffer)               // NEW
+          .text(function(d) { return d; });                       // NEW
+
+      })(window.d3);
+    </script>
+  </body>
+</html>
