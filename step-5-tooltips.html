@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="normalize.css">
     <style>
       #chart {
-        height: 400px;
+        height: 360px;
         position: relative;
-        width: 400px;
+        width: 360px;
       }
       .tooltip {
         background: #eee;
@@ -16,13 +16,16 @@
         color: #333;
         display: none;
         font-size: 12px;
-        left: 150px;
+        left: 130px;
         padding: 10px;
         position: absolute;
         text-align: center;
-        top: 100px;
+        top: 95px;
         width: 80px;
         z-index: 10;
+      }
+      .legend {
+        font-size: 12px;
       }
       rect {
         stroke-width: 2;
@@ -36,10 +39,10 @@
       (function(d3) {
         'use strict';
 
-        var width = 400;
-        var height = 400;
+        var width = 360;
+        var height = 360;
         var radius = Math.min(width, height) / 2;
-        var donutWidth = 80;
+        var donutWidth = 75;
         var legendRectSize = 18;
         var legendBuffer = 4;
         var tooltipBuffer = 14;                                         // NEW
@@ -119,7 +122,7 @@
             .attr('transform', function(d, i) {
               var size = legendRectSize + legendBuffer;
               var offset =  size * color.domain().length / 2;
-              return 'translate(-40,' + (i * size - offset) + ')'; 
+              return 'translate(-35,' + (i * size - offset) + ')'; 
             });
 
           legend.append('rect')

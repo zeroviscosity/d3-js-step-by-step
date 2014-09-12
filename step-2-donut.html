@@ -13,16 +13,16 @@
         'use strict';
 
         var data = [
-          { count: 10 }, 
-          { count: 20 },
-          { count: 30 },
-          { count: 40 }
+          { label: 'A', count: 10 }, 
+          { label: 'B', count: 20 },
+          { label: 'C', count: 30 },
+          { label: 'D', count: 40 }
         ];
 
-        var width = 400;
-        var height = 400;
+        var width = 360;
+        var height = 360;
         var radius = Math.min(width, height) / 2;
-        var donutWidth = 80;                            // NEW
+        var donutWidth = 75;                            // NEW
 
         var color = d3.scale.category20b();
 

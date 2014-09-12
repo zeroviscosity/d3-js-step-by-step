@@ -5,6 +5,9 @@
     <title>Step 4 - Legend</title>
     <link rel="stylesheet" href="normalize.css">
     <style>
+      .legend {
+        font-size: 12px;
+      }
       rect {
         stroke-width: 2;
       }
@@ -17,10 +20,10 @@
       (function(d3) {
         'use strict';
 
-        var width = 400;
-        var height = 400;
+        var width = 360;
+        var height = 360;
         var radius = Math.min(width, height) / 2;
-        var donutWidth = 80;
+        var donutWidth = 75;
         var legendRectSize = 18;                                    // NEW
         var legendBuffer = 4;                                       // NEW
 
@@ -64,7 +67,7 @@
             .attr('transform', function(d, i) {                     // NEW
               var size = legendRectSize + legendBuffer;             // NEW
               var offset =  size * color.domain().length / 2;       // NEW
-              return 'translate(-40,' + (i * size - offset) + ')';  // NEW
+              return 'translate(-35,' + (i * size - offset) + ')';  // NEW
             });                                                     // NEW
 
           legend.append('rect')                                     // NEW
