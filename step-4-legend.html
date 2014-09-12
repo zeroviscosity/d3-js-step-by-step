@@ -53,7 +53,7 @@
             .append('path')
             .attr('d', arc)
             .attr('fill', function(d, i) { 
-              return color(d.data.weekday);                         // UPDATED
+              return color(d.data.label);                         // UPDATED
             });
             
           var legend = svg.selectAll('.legend')                     // NEW

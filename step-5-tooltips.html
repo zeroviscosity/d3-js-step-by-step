@@ -67,7 +67,7 @@
           .attr('class', 'tooltip');
         
         tooltip.append('div')
-          .attr('class', 'weekday');
+          .attr('class', 'label');
 
         tooltip.append('div')
           .attr('class', 'count');
@@ -86,7 +86,7 @@
             .append('path')
             .attr('d', arc)
             .attr('fill', function(d, i) { 
-              return color(d.data.weekday); 
+              return color(d.data.label); 
             });
 
           path.on('mouseover', function(d) {
@@ -94,7 +94,7 @@
               return d.count;
             }));
             var percent = Math.round(1000 * d.data.count / total) / 10;
-            tooltip.select('.weekday').html(d.data.weekday);
+            tooltip.select('.label').html(d.data.label);
             tooltip.select('.count').html(d.data.count); 
             tooltip.select('.percent').html(percent + '%'); 
             tooltip.style('display', 'block');
