@@ -111,7 +111,7 @@
           path.on('mousemove', function(d) {                            // NEW
             tooltip.style('top', (d3.event.pageY + 10) + 'px')          // NEW
               .style('left', (d3.event.pageX + 10) + 'px');             // NEW
-          });
+          });                                                           // NEW
           */
             
           var legend = svg.selectAll('.legend')
@@ -122,7 +122,9 @@
             .attr('transform', function(d, i) {
               var size = legendRectSize + legendBuffer;
               var offset =  size * color.domain().length / 2;
-              return 'translate(-35,' + (i * size - offset) + ')'; 
+              var horz = -2 * legendRectSize;
+              var vert = i * size - offset;
+              return 'translate(' + horz + ',' + vert + ')';
             });
 
           legend.append('rect')
@@ -135,7 +137,9 @@
             .attr('x', legendRectSize + legendBuffer)
             .attr('y', legendRectSize - legendBuffer)
             .text(function(d) { return d; });
+
         });
+
       })(window.d3);
     </script>
   </body>
