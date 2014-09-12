@@ -12,11 +12,11 @@
       (function(d3) {
         'use strict';
 
-        var data = [
-          { label: 'A', count: 10 }, 
-          { label: 'B', count: 20 },
-          { label: 'C', count: 30 },
-          { label: 'D', count: 40 }
+        var dataset = [
+          { label: 'Abulia', count: 10 }, 
+          { label: 'Burlap', count: 20 },
+          { label: 'Cucumber', count: 30 },
+          { label: 'Dijkstra', count: 40 }
         ];
 
         var width = 360;
@@ -43,13 +43,14 @@
             ',' + (height / 2) + ')');
 
         var path = svg.selectAll('path')
-          .data(pie(data))
+          .data(pie(dataset))
           .enter()
           .append('path')
           .attr('d', arc)
           .attr('fill', function(d, i) { 
-            return color(i); 
+            return color(d.data.label);
           });
+
       })(window.d3);
     </script>
   </body>
