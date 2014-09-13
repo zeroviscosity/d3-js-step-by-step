@@ -29,20 +29,20 @@
         font-size: 12px;
       }
       rect {
-        cursor: pointer;
+        cursor: pointer;                                              /* NEW */
         stroke-width: 2;
       }
-      rect.off {
-        fill: transparent !important;
-      }
-      h1 {
-        font-size: 14px;
-        text-align: center;
-      }
+      rect.off {                                                      /* NEW */
+        fill: transparent !important;                                 /* NEW */
+      }                                                               /* NEW */
+      h1 {                                                            /* NEW */
+        font-size: 14px;                                              /* NEW */
+        text-align: center;                                           /* NEW */
+      }                                                               /* NEW */
     </style>
   </head>
   <body>
-    <h1>Toronto Parking Tickets by Weekday in 2012</h1>
+    <h1>Toronto Parking Tickets by Weekday in 2012</h1>             <!-- NEW -->
     <div id="chart"></div>
     <script src="d3.v3.min.js"></script>
     <script>
