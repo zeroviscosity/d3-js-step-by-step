@@ -59,14 +59,6 @@
 
         var color = d3.scale.category20b();
 
-        var arc = d3.svg.arc()
-          .outerRadius(radius)
-          .innerRadius(radius - donutWidth);
-
-        var pie = d3.layout.pie()
-          .value(function(d) { return d.count; })
-          .sort(null);
-
         var svg = d3.select('#chart')
           .append('svg')
           .attr('width', width)
@@ -75,6 +67,14 @@
           .attr('transform', 'translate(' + (width / 2) + 
             ',' + (height / 2) + ')');
 
+        var arc = d3.svg.arc()
+          .outerRadius(radius)
+          .innerRadius(radius - donutWidth);
+
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.count; })
+          .sort(null);
+          
         var tooltip = d3.select('#chart')
           .append('div')
           .attr('class', 'tooltip');
