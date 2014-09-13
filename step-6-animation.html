@@ -132,10 +132,10 @@
             .append('g')
             .attr('class', 'legend')
             .attr('transform', function(d, i) {
-              var size = legendRectSize + legendBuffer;
-              var offset =  size * color.domain().length / 2;
+              var height = legendRectSize + legendBuffer;
+              var offset =  height * color.domain().length / 2;
               var horz = -2 * legendRectSize;
-              var vert = i * size - offset;
+              var vert = i * height - offset;
               return 'translate(' + horz + ',' + vert + ')';
             });
 
