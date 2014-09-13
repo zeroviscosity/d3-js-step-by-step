@@ -68,13 +68,13 @@
             ',' + (height / 2) + ')');
 
         var arc = d3.svg.arc()
-          .outerRadius(radius)
-          .innerRadius(radius - donutWidth);
+          .innerRadius(radius - donutWidth)
+          .outerRadius(radius);
 
         var pie = d3.layout.pie()
           .value(function(d) { return d.count; })
           .sort(null);
-          
+
         var tooltip = d3.select('#chart')
           .append('div')
           .attr('class', 'tooltip');

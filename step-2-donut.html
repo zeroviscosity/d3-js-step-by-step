@@ -35,9 +35,9 @@
             ',' + (height / 2) + ')');
 
         var arc = d3.svg.arc()
-          .outerRadius(radius)                          // UPDATED (removed semicolon)
-          .innerRadius(radius - donutWidth);            // NEW
-
+          .innerRadius(radius - donutWidth)             // NEW
+          .outerRadius(radius);
+          
         var pie = d3.layout.pie()
           .value(function(d) { return d.count; })
           .sort(null);
