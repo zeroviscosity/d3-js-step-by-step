@@ -100,8 +100,8 @@
             .attr('d', arc)
             .attr('fill', function(d, i) { 
               return color(d.data.label); 
-            })
-            .each(function(d) { this._current = d; });                // UPDATED (removed semicolon)
+            })                                                        // UPDATED (removed semicolon)
+            .each(function(d) { this._current = d; });                // NEW
 
           path.on('mouseover', function(d) {
             var total = d3.sum(dataset.map(function(d) {
