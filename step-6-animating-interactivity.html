@@ -32,7 +32,7 @@
         cursor: pointer;                                              /* NEW */
         stroke-width: 2;
       }
-      rect.off {                                                      /* NEW */
+      rect.disabled {                                                      /* NEW */
         fill: transparent !important;                                 /* NEW */
       }                                                               /* NEW */
       h1 {                                                            /* NEW */
@@ -150,11 +150,11 @@
                 return (d.enabled) ? 1 : 0;                           // NEW
               }));                                                    // NEW
               
-              if (rect.attr('class') === 'off') {                     // NEW
+              if (rect.attr('class') === 'disabled') {                // NEW
                 rect.attr('class', '');                               // NEW
               } else {                                                // NEW
                 if (totalEnabled < 2) return;                         // NEW
-                rect.attr('class', 'off');                            // NEW
+                rect.attr('class', 'disabled');                       // NEW
                 enabled = false;                                      // NEW
               }                                                       // NEW
 
