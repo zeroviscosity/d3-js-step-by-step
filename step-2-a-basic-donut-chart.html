@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Step 1 - Pie</title>
+    <title>Step 2 - A Basic Donut Chart</title>
     <link rel="stylesheet" href="normalize.css">
   </head>
   <body>
@@ -22,6 +22,7 @@
         var width = 360;
         var height = 360;
         var radius = Math.min(width, height) / 2;
+        var donutWidth = 75;                            // NEW
 
         var color = d3.scale.category20b();
 
@@ -34,8 +35,9 @@
             ',' + (height / 2) + ')');
 
         var arc = d3.svg.arc()
+          .innerRadius(radius - donutWidth)             // NEW
           .outerRadius(radius);
-
+          
         var pie = d3.layout.pie()
           .value(function(d) { return d.count; })
           .sort(null);
