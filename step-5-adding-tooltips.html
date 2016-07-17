@@ -34,7 +34,7 @@
   </head>
   <body>
     <div id="chart"></div>
-    <script src="d3.v3.min.js"></script>
+    <script src="d3.v4.min.js"></script>
     <script>
       (function(d3) {
         'use strict';
@@ -46,31 +46,31 @@
         var legendRectSize = 18;
         var legendSpacing = 4;
 
-        var color = d3.scale.category20b();
+        var color = d3.scaleOrdinal(d3.schemeCategory20b);
 
         var svg = d3.select('#chart')
           .append('svg')
           .attr('width', width)
           .attr('height', height)
           .append('g')
-          .attr('transform', 'translate(' + (width / 2) + 
+          .attr('transform', 'translate(' + (width / 2) +
             ',' + (height / 2) + ')');
 
-        var arc = d3.svg.arc()
+        var arc = d3.arc()
           .innerRadius(radius - donutWidth)
           .outerRadius(radius);
 
-        var pie = d3.layout.pie()
+        var pie = d3.pie()
           .value(function(d) { return d.count; })
           .sort(null);
 
         var tooltip = d3.select('#chart')                               // NEW
           .append('div')                                                // NEW
           .attr('class', 'tooltip');                                    // NEW
-                      
+
         tooltip.append('div')                                           // NEW
           .attr('class', 'label');                                      // NEW
-             
+
         tooltip.append('div')                                           // NEW
           .attr('class', 'count');                                      // NEW
 
@@ -87,8 +87,8 @@
             .enter()
             .append('path')
             .attr('d', arc)
-            .attr('fill', function(d, i) { 
-              return color(d.data.label); 
+            .attr('fill', function(d, i) {
+              return color(d.data.label);
             });
 
           path.on('mouseover', function(d) {                            // NEW
@@ -101,18 +101,18 @@
             tooltip.select('.percent').html(percent + '%');             // NEW
             tooltip.style('display', 'block');                          // NEW
           });                                                           // NEW
-          
+
           path.on('mouseout', function() {                              // NEW
             tooltip.style('display', 'none');                           // NEW
           });                                                           // NEW
 
-          /* OPTIONAL 
+          /* OPTIONAL
           path.on('mousemove', function(d) {                            // NEW
             tooltip.style('top', (d3.event.layerY + 10) + 'px')         // NEW
               .style('left', (d3.event.layerX + 10) + 'px');            // NEW
           });                                                           // NEW
           */
-            
+
           var legend = svg.selectAll('.legend')
             .data(color.domain())
             .enter()
@@ -128,10 +128,10 @@
 
           legend.append('rect')
             .attr('width', legendRectSize)
-            .attr('height', legendRectSize)                                   
+            .attr('height', legendRectSize)
             .style('fill', color)
             .style('stroke', color);
-            
+
           legend.append('text')
             .attr('x', legendRectSize + legendSpacing)
             .attr('y', legendRectSize - legendSpacing)

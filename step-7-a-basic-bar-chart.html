@@ -23,7 +23,7 @@
   <body>
     <h1>Toronto Parking Tickets by Weekday in 2012</h1>             <!-- NEW -->
     <div id="chart"></div>
-    <script src="d3.v3.min.js"></script>
+    <script src="d3.v4.min.js"></script>
     <script>
       (function(d3) {
         'use strict';
@@ -37,17 +37,19 @@
           .attr('height', height)
           .append('g');
 
-        var x = d3.scale.ordinal()
-          .rangeBands([0, width], 0.1);
+        var x = d3.scaleBand()
+          .range([0, width])
+          .paddingInner(0.1)
+          .round(true);
 
-        var y = d3.scale.linear()
+        var y = d3.scaleLinear()
           .range([height, 0]);
 
         d3.csv('weekdays.csv', function(error, dataset) {
           dataset.forEach(function(d) {
             d.count = +d.count;
           });
-          
+
           x.domain(dataset.map(function(d) {
             return d.label;
           }));
@@ -62,7 +64,7 @@
             .append('rect')
             .attr('x', function(d) { return x(d.label); })
             .attr('y', function(d) { return y(d.count); })
-            .attr('width', x.rangeBand())
+            .attr('width', x.bandwidth())
             .attr('height', function(d) { return height - y(d.count); });
         });
       })(window.d3);
